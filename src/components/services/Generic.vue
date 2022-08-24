@@ -31,7 +31,7 @@
             <slot name="indicator" class="indicator"></slot>
           </div>
           <div class="tag" :class="item.tagstyle" v-if="item.tag">
-            <strong class="tag-text">#{{ item.tag }}</strong>
+            <strong class="tag-text">{{ item.tag }}</strong>
           </div>
         </div>
       </a>
