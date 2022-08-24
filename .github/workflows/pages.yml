@@ -1,0 +1,36 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  deploy:
+    name: "Deploy to Pages"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Setup Node"
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.x"
+
+      - name: "Checkout Code"
+        uses: actions/checkout@v2
+
+      - name: "Install Dependencies"
+        run: yarn
+
+      - name: "Build Static Content"
+        run: yarn run build
+
+      - name: "Mirror index.html to 404.html"
+        run: cp dist/index.html dist/404.html
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: home.zekro.de
